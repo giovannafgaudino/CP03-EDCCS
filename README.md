@@ -58,8 +58,7 @@
 | 1          | Buzeer                        |
 | 1          | LCD                           |
 
-</div>
-<a align="right"> 
+
 <b> - Tabela com o hardware do circuito no Arduino - Hands On </b>
 
 | Quantidade | Descrição                     |
@@ -76,8 +75,8 @@
 | 1          | Potenciômetro                 |
 | 1          | Buzeer                        |
 | 1          | LCD                           |
-</a>
 
+</div>
 
 <h2> Configuração </h2>
 
