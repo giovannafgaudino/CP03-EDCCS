@@ -16,6 +16,9 @@
             <th>Alunos:</th>
           </tr>
           <tr>
+            <th> Gabriel Souza Fiori </th>
+          </tr>
+          <tr>
             <th> Giovanna Franco Gaudino Rodrigues</th>
           </tr>
           <tr>
@@ -23,9 +26,6 @@
           </tr>
           <tr>
             <th> Gustavo Gouvêa </th>
-          </tr>
-          <tr>
-            <th> Gabriel Souza Fiori </th>
           </tr>
         </table>
       </div>
