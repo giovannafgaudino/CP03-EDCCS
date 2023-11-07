@@ -16,7 +16,7 @@
             <th>Alunos:</th>
           </tr>
           <tr>
-            <th> Gabriel Souza Fiori </th>
+            <th> Gabriel Souza Fiore </th>
           </tr>
           <tr>
             <th> Giovanna Franco Gaudino Rodrigues</th>
