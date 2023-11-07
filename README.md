@@ -1,5 +1,4 @@
 # CP03-EDCCS
-# CP03EDCCS
 
 <div align="center">
   <br>
@@ -54,15 +53,13 @@
 | 7          | 220 Ω Resistor                |
 | 1          | 10 Ω Resistor                 |
 | 1          | Fotorresistor (LDR)           |
-| 1          | Potenciômetro                 |
-| 1          | Sensor de Temperatura         |
+| 2          | Potenciômetro                 |
 | 1          | Sensor Ultrassônico           |
 | 1          | Buzeer                        |
 | 1          | LCD                           |
 
-</div>
 
-<div align="right">
+<a align="right"> 
 <b> - Tabela com o hardware do circuito no Arduino - Hands On </b>
 
 | Quantidade | Descrição                     |
@@ -79,7 +76,7 @@
 | 1          | Potenciômetro                 |
 | 1          | Buzeer                        |
 | 1          | LCD                           |
-
+</a>
 </div>
 
 <h2> Configuração </h2>
