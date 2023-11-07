@@ -1,0 +1,48 @@
+#include <LiquidCrystal.h>
+
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+const int triggerPin = 6; // Pino de gatilho do sensor ultrassônico
+const int echoPin = 7;   // Pino de eco do sensor ultrassônico
+void setup() {
+  lcd.begin(16, 2); // Inicializa o LCD
+  pinMode(triggerPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  Serial.begin(9600);
+
+}
+
+void loop() {
+  int point = 0; 
+
+  digitalWrite(triggerPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(triggerPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(triggerPin, LOW);
+  
+  long duracao = pulseIn(echoPin, HIGH);
+  int distancia_cm = duracao / 58; // Conversão para centímetros
+
+  lcd.clear(); // Limpa o display
+
+  lcd.setCursor(0, 0);
+  lcd.print("Estoque");
+  if (distancia_cm < 50) {
+    lcd.setCursor(0, 1);
+    lcd.print("Alto Nv");
+    point=3;
+  } else if (distancia_cm < 100) {
+    lcd.setCursor(0, 1);
+    lcd.print("Medio Nv");
+    point = 2;
+  } else {
+    lcd.setCursor(0, 1);
+    lcd.print("Baixo Nv");
+    point=1;
+
+  }
+  
+  Serial.write(point);
+  Serial.println(point);
+  delay(500); // Aguarda 1 segundo
+}

@@ -1,0 +1,163 @@
+#include <DHT.h>
+
+#define DHTPIN 7
+#define DHTTYPE DHT11
+
+int LDRPin = A4;
+
+int ledVerde = 5;
+int ledAmarelo = 2;
+int ledVermelho = 3;
+
+int alarme = 4;
+int luz;
+int valorAEnviar = 42; // Substitua 42 pelo valor que você deseja enviar
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+  pinMode(LDRPin, INPUT);
+  pinMode(ledVerde, OUTPUT);
+  pinMode(ledAmarelo, OUTPUT);
+  pinMode(ledVermelho, OUTPUT);
+
+  pinMode(10, OUTPUT);
+  pinMode(9, OUTPUT);
+  pinMode(8, OUTPUT);
+
+  pinMode(alarme, OUTPUT);
+  Serial.begin(9600);
+  dht.begin();
+}
+
+void loop() {
+  digitalWrite(alarme, LOW);
+  int leitura = (Serial.read());
+  Serial.println(leitura);
+  if (leitura == 3) {
+    digitalWrite(10, HIGH);
+    digitalWrite(9, HIGH);
+    digitalWrite(8, HIGH);
+  } else if (leitura == 2) {
+    digitalWrite(10, HIGH);
+    digitalWrite(9, HIGH);
+    digitalWrite(8, LOW);
+  } else if (leitura == 1) {
+    digitalWrite(10, HIGH);
+    digitalWrite(9, LOW);
+    digitalWrite(8, LOW);
+  }
+
+  float umidade = dht.readHumidity();
+  float temperatura = dht.readTemperature();
+  luz = analogRead(LDRPin);
+
+  if (luz > 950) //emitir problema de luz
+  {
+    Serial.println("\nLuminosidade alta: ");
+    Serial.println(luz);
+  } else if (luz >= 850)
+  {
+    Serial.print("\nLuminosidade atingindo niveis altos: ");
+    Serial.println(luz);
+  } else
+  {
+    Serial.print("Luz: ");
+    Serial.print(luz);
+    Serial.print("\t");
+  }
+
+
+  if (temperatura < 10) //emitir problema de temperatura
+  {
+    Serial.print("\nTemperatura baixa: ");
+    Serial.print(temperatura);
+    Serial.println("ºC");
+  } else if (temperatura <= 11.5)
+  {
+    Serial.print("\nTemperatura atingindo niveis baixos: ");
+    Serial.print(temperatura);
+    Serial.println("°C");
+  } else if (temperatura > 16)
+  {
+    Serial.print("\nTemperatura alta: ");
+    Serial.print(temperatura);
+    Serial.println("°C");
+  } else if (temperatura >= 14.5)
+  {
+    Serial.print("\nTemperatura atingindo niveis altos: ");
+    Serial.print(temperatura);
+    Serial.println("°C");
+  } else
+  {
+    Serial.print("Temperatura: ");
+    Serial.print(temperatura);
+    Serial.print("°C\t");
+  }
+
+
+  if (umidade < 60) //emitir problema de umidade
+  {
+    Serial.print("\nUmidade baixa: ");
+    Serial.println(umidade);
+  } else if (umidade <= 65)
+  {
+    Serial.print("\nUmidade atingindo niveis baixos: ");
+    Serial.println(umidade);
+  } else if (umidade > 80)
+  {
+    Serial.print("\nUmidade alta: ");
+    Serial.println(umidade);
+  }
+  else if (umidade >= 75)
+  {
+    Serial.print("\nUmidade atingindo niveis altos: ");
+    Serial.println(umidade);
+  } else
+  {
+    Serial.print("Umidade: ");
+    Serial.print(umidade);
+    Serial.print("\t");
+  }
+
+
+
+
+
+  if (luz < 850 && temperatura > 11.5 && temperatura < 14.5 && umidade > 65 && umidade < 75) { //OK
+    digitalWrite(ledVerde, HIGH);
+    digitalWrite(ledAmarelo, LOW);
+    digitalWrite(ledVermelho, LOW);
+    noTone(alarme);
+    Serial.print("\nOK\n\n");
+  }
+  else if (luz > 950 || temperatura < 10 || temperatura > 16 || umidade < 60 || umidade > 80 ) { //PROBLEMA
+    digitalWrite(ledVermelho, HIGH);
+    digitalWrite(ledVerde, LOW);
+    digitalWrite(ledAmarelo, LOW);
+
+    Serial.print("\n***PROBLEMA***\n\n");
+
+    tone(alarme, 261);
+    digitalWrite(alarme, HIGH);
+    delay(3000);
+    noTone(alarme);
+    digitalWrite(alarme, LOW);
+
+    delay(250);
+  }
+  else { //ALERTA
+    digitalWrite(ledAmarelo, HIGH);
+    digitalWrite(ledVerde, LOW);
+    digitalWrite(ledVermelho, LOW);
+
+    Serial.print("\n***ALERTA***\n\n");
+
+    tone(alarme, 261);
+    digitalWrite(alarme, HIGH);
+    delay(3000);
+    noTone(alarme);
+    digitalWrite(alarme, LOW);
+
+    delay(500);
+  }
+}
